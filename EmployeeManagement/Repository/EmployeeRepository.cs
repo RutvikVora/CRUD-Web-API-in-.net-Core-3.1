@@ -45,6 +45,8 @@
                 Employee empDb = GetEmployeeDetailsById(employeeModel.Id);
                 if (empDb != null)
                 {
+                    if (!IsEmailExit(employeeModel.Email, employeeModel.Id))
+                    {
                         empDb.EmpName = employeeModel.EmpName;
                         empDb.Email = employeeModel.Email;
                         empDb.Gender = employeeModel.Gender;
@@ -53,13 +55,15 @@
                         _context.Update(empDb);
                         _context.SaveChanges();
                         return empDb;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
-                {
-                    var email = _context.Employee.Where(x => x.Email.Equals(employeeModel.Email)).FirstOrDefault();
-
-
-                    if (email == null)
+                { 
+                    if (!IsEmailExit(employeeModel.Email))
                     {
                         Employee emptemp = new Employee();
                         emptemp.Id = employeeModel.Id;
@@ -85,6 +89,7 @@
             }
         }
 
+
         /// <summary>
         /// delete employees
         /// </summary>
@@ -104,6 +109,17 @@
                 return ("Employee not found");
             }
         }
-        
+
+
+        /// <summary>
+        /// check that email exist or not
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool IsEmailExit(string email, int id = -1)
+        {
+            Employee isEmpExist = _context.Employee.Where(e => e.Email == email && e.Id != id).FirstOrDefault();
+            return isEmpExist != null;
+        }
     }
 }

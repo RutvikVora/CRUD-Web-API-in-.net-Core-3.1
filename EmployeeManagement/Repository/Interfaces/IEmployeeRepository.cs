@@ -1,9 +1,8 @@
-﻿using EmployeeManagement.Models;
-using EmployeeManagement.ViewModels;
-using System.Collections.Generic;
-
-namespace EmployeeManagement.Repository.Interfaces
+﻿namespace EmployeeManagement.Repository.Interfaces
 {
+    using EmployeeManagement.Models;
+    using EmployeeManagement.ViewModels;
+    using System.Collections.Generic;
     public interface IEmployeeRepository
     {
         /// <summary>

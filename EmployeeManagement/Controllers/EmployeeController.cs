@@ -1,15 +1,12 @@
-﻿using EmployeeManagement.Models;
-using EmployeeManagement.Repository.Interfaces;
-using EmployeeManagement.ViewModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace EmployeeManagement.Controllers
+﻿namespace EmployeeManagement.Controllers
 {
-    [Route("api/[controller]")]
+    using EmployeeManagement.Models;
+    using EmployeeManagement.Repository.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -24,7 +21,6 @@ namespace EmployeeManagement.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("[action]")]
         public ActionResult<List<EmployeeModel>> GetAllEmployees()
         {
             try
@@ -42,8 +38,7 @@ namespace EmployeeManagement.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("[action]/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<List<EmployeeModel>> GetEmployeesById(int id)
         {
             try
@@ -63,8 +58,7 @@ namespace EmployeeManagement.Controllers
         /// <param name="employeeModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("[action]")]
-        public IActionResult UpsertEmployees(EmployeeModel employeeModel)
+        public ActionResult<EmployeeModel> UpsertEmployees(EmployeeModel employeeModel)
         {
             try
             {
@@ -91,9 +85,8 @@ namespace EmployeeManagement.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
-        [Route("[action]/{id}")]
-        public IActionResult DeleteEmployee(int id)
+        [HttpDelete("{id}")]
+        public ActionResult<string> DeleteEmployee(int id)
         {
             try
             {
