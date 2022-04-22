@@ -2,42 +2,44 @@
 {
     using EmployeeManagement.Models;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using EmployeeManagement.Repository.Interfaces;
+    using EmployeeManagement.Entities;
 
-    public class EmployeeRepository: IEmployeeRepository
+    public class EmployeeRepository: RepositoryBase<Employee>, IEmployeeRepository
     {
-        private EmployeeManagementContext _context;
-        public EmployeeRepository(EmployeeManagementContext context)
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="employeeManagementContext"></param>
+        public EmployeeRepository(EmployeeManagementContext employeeManagementContext) : base(employeeManagementContext)
         {
-            _context = context;
         }
 
         /// <summary>
         /// get list of all employees
         /// </summary>
-        /// <returns></returns>
-        public List<Employee> GetEmployeesList()
+        /// <returns>list of all employees</returns>
+        public IQueryable<Employee> GetEmployeesList()
         {
-            return _context.Set<Employee>().ToList();
+            return this.Find();
         }
 
         /// <summary>
         /// get employee details by employee id
         /// </summary>
         /// <param name="empId"></param>
-        /// <returns></returns>
+        /// <returns>employee of particular Id</returns>
         public Employee GetEmployeeDetailsById(int empId)
         {
-            return _context.Find<Employee>(empId);
+            return this.Find(x => x.Id == empId).FirstOrDefault();
         }
 
         /// <summary>
         ///  add edit employee
         /// </summary>
         /// <param name="employeeModel"></param>
-        /// <returns></returns>
+        /// <returns>employee entity</returns>
         public Employee UpsertEmployee(EmployeeModel employeeModel)
         {
             try
@@ -47,13 +49,9 @@
                 {
                     if (!IsEmailExit(employeeModel.Email, employeeModel.Id))
                     {
-                        empDb.EmpName = employeeModel.EmpName;
-                        empDb.Email = employeeModel.Email;
-                        empDb.Gender = employeeModel.Gender;
-                        empDb.Salary = employeeModel.Salary;
-                        empDb.Department = employeeModel.Department;
-                        _context.Update(empDb);
-                        _context.SaveChanges();
+                        employeeModel.MappingModelToEntity(empDb,employeeModel);
+                        this.UpdateEntity(empDb);
+                        this.Save();
                         return empDb;
                     }
                     else
@@ -65,16 +63,10 @@
                 { 
                     if (!IsEmailExit(employeeModel.Email))
                     {
-                        Employee emptemp = new Employee();
-                        emptemp.Id = employeeModel.Id;
-                        emptemp.EmpName = employeeModel.EmpName;
-                        emptemp.Email = employeeModel.Email;
-                        emptemp.Gender = employeeModel.Gender;
-                        emptemp.Salary = employeeModel.Salary;
-                        emptemp.Department = employeeModel.Department;
-                        _context.Add<Employee>(emptemp);
-                        _context.SaveChanges();
-                        return emptemp;
+                        Employee employee = employeeModel;
+                        this.CreateEntity(employee);
+                        this.Save();
+                        return employee;
                     }
                     else
                     {
@@ -95,19 +87,11 @@
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public string DeleteEmployee(int employeeId)
+        public void DeleteEmployee(int employeeId)
         {
-            Employee employee = _context.Employee.Find(employeeId);
-            if (employee != null)
-            {
-                _context.Employee.Remove(employee);
-                _context.SaveChanges();
-                return ("Deleted");
-            }
-            else
-            {
-                return ("Employee not found");
-            }
+            Employee employee = this.Find(x => x.Id == employeeId).FirstOrDefault();
+            this.DeleteEntity(employee);
+            this.Save();
         }
 
 
@@ -115,11 +99,10 @@
         /// check that email exist or not
         /// </summary>
         /// <param name="email"></param>
-        /// <returns></returns>
+        /// <returns>boolean value</returns>
         public bool IsEmailExit(string email, int id = -1)
         {
-            Employee isEmpExist = _context.Employee.Where(e => e.Email == email && e.Id != id).FirstOrDefault();
-            return isEmpExist != null;
+            return this.Find(e => e.Email == email && e.Id != id).Any();
         }
     }
 }

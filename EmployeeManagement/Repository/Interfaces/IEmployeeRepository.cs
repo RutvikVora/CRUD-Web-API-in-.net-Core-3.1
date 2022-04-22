@@ -1,28 +1,29 @@
 ﻿namespace EmployeeManagement.Repository.Interfaces
 {
+    using EmployeeManagement.Entities;
     using EmployeeManagement.Models;
-    using EmployeeManagement.ViewModels;
-    using System.Collections.Generic;
+    using System.Linq;
+
     public interface IEmployeeRepository
     {
         /// <summary>
         /// get list of all employees
         /// </summary>
-        /// <returns></returns>
-        List<Employee> GetEmployeesList();
+        /// <returns>list of all employees</returns>
+        public IQueryable<Employee> GetEmployeesList();
 
         /// <summary>
         /// get employee details by employee id
         /// </summary>
         /// <param name="empId"></param>
-        /// <returns></returns>
+        /// <returns>employee of particular Id</returns>
         Employee GetEmployeeDetailsById(int empId);
 
         /// <summary>
         ///  add edit employee
         /// </summary>
         /// <param name="employeeModel"></param>
-        /// <returns></returns>
+        /// <returns>employee entity</returns>
         Employee UpsertEmployee(EmployeeModel employeeModel);
 
 
@@ -31,6 +32,7 @@
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        string DeleteEmployee(int employeeId);
+        void DeleteEmployee(int employeeId);
+
     }
 }

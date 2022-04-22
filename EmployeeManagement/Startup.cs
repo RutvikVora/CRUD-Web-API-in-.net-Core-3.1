@@ -1,3 +1,4 @@
+using EmployeeManagement.Entities;
 using EmployeeManagement.Models;
 using EmployeeManagement.Repository;
 using EmployeeManagement.Repository.Interfaces;
@@ -35,6 +36,10 @@ namespace EmployeeManagement
             services.AddDbContext<EmployeeManagementContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddScoped<ITaskRepository, TaskRepository>();
+
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
 
             services.AddSwaggerGen();
 

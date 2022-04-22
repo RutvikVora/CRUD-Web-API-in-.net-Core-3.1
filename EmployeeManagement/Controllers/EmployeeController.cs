@@ -1,7 +1,9 @@
 ﻿namespace EmployeeManagement.Controllers
 {
+    using EmployeeManagement.Entities;
     using EmployeeManagement.Models;
     using EmployeeManagement.Repository.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -10,91 +12,89 @@
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        IEmployeeRepository employeeRepository;
-        public EmployeeController(IEmployeeRepository rep)
+        private readonly IEmployeeRepository employeeRepository;
+
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="employeeRepository"></param>
+        public EmployeeController(IEmployeeRepository employeeRepository)
         {
-            employeeRepository = rep;
+            this.employeeRepository = employeeRepository;
         }
 
         /// <summary>
         /// get all employess
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all Employees</returns>
         [HttpGet]
         public ActionResult<List<EmployeeModel>> GetAllEmployees()
         {
-            try
-            {
-                return Ok(employeeRepository.GetEmployeesList());
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            return Ok(this.employeeRepository.GetEmployeesList());
         }
 
         /// <summary>
         /// get employee details by id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public ActionResult<List<EmployeeModel>> GetEmployeesById(int id)
+        /// <param name="empId"></param>
+        /// <returns>employee details of particular Id</returns>
+        [HttpGet("{empId}")]
+        public ActionResult<List<EmployeeModel>> GetEmployeeById(int empId)
         {
-            try
-            {
-                return Ok(employeeRepository.GetEmployeeDetailsById(id));
-
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            return Ok(this.employeeRepository.GetEmployeeDetailsById(empId));
         }
 
         /// <summary>
-        /// save employee
+        /// add or edit employee
         /// </summary>
         /// <param name="employeeModel"></param>
-        /// <returns></returns>
+        /// <returns>Model of employee</returns>
         [HttpPost]
-        public ActionResult<EmployeeModel> UpsertEmployees(EmployeeModel employeeModel)
+        public ActionResult<EmployeeModel> UpsertEmployee(EmployeeModel employeeModel)
         {
             try
             {
-                var result = employeeRepository.UpsertEmployee(employeeModel);
+                Employee result = this.employeeRepository.UpsertEmployee(employeeModel);
                 if (result != null)
                 {
-                    EmployeeModel empModel = new EmployeeModel(employeeRepository.UpsertEmployee(employeeModel));
+                    EmployeeModel empModel = new EmployeeModel(this.employeeRepository.UpsertEmployee(employeeModel));
                     return Ok(empModel);
                 }
                 else
                 {
-                    return Ok("Email already exist !!!");
+                    return StatusCode(StatusCodes.Status409Conflict);
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         /// <summary>
         /// delete employee
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        public ActionResult<string> DeleteEmployee(int id)
+        /// <param name="empId"></param>
+        /// <returns>success message of deleted</returns>
+        [HttpDelete("{empId}")]
+        public ActionResult<string> DeleteEmployee(int empId)
         {
             try
             {
-                return Ok(employeeRepository.DeleteEmployee(id));
+                Employee employee = this.employeeRepository.GetEmployeeDetailsById(empId);
+
+                if(employee == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound);
+                }
+                this.employeeRepository.DeleteEmployee(empId);
+                return Ok();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                        ex.Message);
             }
         }
     }

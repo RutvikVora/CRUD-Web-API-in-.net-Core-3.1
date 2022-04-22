@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace EmployeeManagement.Models
+namespace EmployeeManagement.Entities
 {
     public partial class EmployeeManagementContext : DbContext
     {
@@ -17,6 +17,7 @@ namespace EmployeeManagement.Models
 
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Task> Task { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,7 +25,7 @@ namespace EmployeeManagement.Models
             {
 #pragma warning disable CS1030 // #warning directive
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-J8T7UO1H;Database=EmployeeManagement;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-J8T7UO1H; initial catalog=EmployeeManagement; Trusted_Connection=True;");
 #pragma warning restore CS1030 // #warning directive
             }
         }
@@ -43,9 +44,7 @@ namespace EmployeeManagement.Models
 
             modelBuilder.Entity<Employee>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Department)
                     .HasMaxLength(10)
@@ -62,6 +61,37 @@ namespace EmployeeManagement.Models
                 entity.Property(e => e.Gender)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Task>(entity =>
+            {
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Priority)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.ReportedBy)
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+
+                entity.Property(e => e.StartDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.Emp)
+                    .WithMany(p => p.Task)
+                    .HasForeignKey(d => d.EmpId)
+                    .HasConstraintName("FK_Task_Employee");
             });
 
             OnModelCreatingPartial(modelBuilder);
