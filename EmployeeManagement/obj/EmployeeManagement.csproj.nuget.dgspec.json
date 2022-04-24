@@ -55,11 +55,19 @@
               "target": "Package",
               "version": "[3.1.0, )"
             },
-            "NSwag.AspNetCore": {
-              "target": "Package",
-              "version": "[13.15.10, )"
-            },
             "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Swashbuckle.AspNetCore.Swagger": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerGen": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Swashbuckle.AspNetCore.SwaggerUI": {
               "target": "Package",
               "version": "[6.3.0, )"
             }

@@ -32,7 +32,7 @@
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns>task of particular Id</returns>
-        public Task GetTaskById(int taskId)
+        public Task GetTaskById(int? taskId)
         {
             return this.Find(x => x.TaskId == taskId).FirstOrDefault();
         }

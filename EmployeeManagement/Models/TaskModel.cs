@@ -1,8 +1,7 @@
-﻿using EmployeeManagement.Entities;
-using System;
-
-namespace EmployeeManagement.Models
+﻿namespace EmployeeManagement.Models
 {
+    using EmployeeManagement.Entities;
+    using System;
     public class TaskModel
     {
         /// <summary>
@@ -30,46 +29,9 @@ namespace EmployeeManagement.Models
         }
 
         /// <summary>
-        /// mapping model properties to entity properties
-        /// </summary>
-        /// <param name="task"></param>
-        /// <param name="taskModel"></param>
-        public void MappingModelToEntity(Task task, TaskModel taskModel)
-        {
-            task.TaskId = taskModel.TaskId;
-            task.Title = taskModel.Title;
-            task.EmpId = taskModel.EmpId;
-            task.StartDate = taskModel.StartDate;
-            task.EndDate = taskModel.EndDate;
-            task.Status = taskModel.Status;
-            task.Priority = taskModel.Priority;
-            task.ReportedBy = taskModel.ReportedBy;
-        }
-
-        /// <summary>
-        /// conversion of model to entity
-        /// </summary>
-        /// <param name="taskModel"></param>
-        /// <returns>Task entity</returns>
-        public static implicit operator Task(TaskModel taskModel)
-        {
-            return new Task
-            {
-                TaskId = taskModel.TaskId,
-                Title = taskModel.Title,
-                EmpId = taskModel.EmpId,
-                StartDate = taskModel.StartDate,
-                EndDate = taskModel.EndDate,
-                Priority = taskModel.Priority,
-                Status = taskModel.Status,
-                ReportedBy = taskModel.ReportedBy
-            };
-        }
-
-        /// <summary>
         /// Id of task - PK
         /// </summary>
-        public int TaskId { get; set; }
+        public int? TaskId { get; set; }
 
         /// <summary>
         /// Id of employee - FK
@@ -105,5 +67,40 @@ namespace EmployeeManagement.Models
         /// person name whom employee need to report
         /// </summary>
         public string ReportedBy { get; set; }
+
+        /// <summary>
+        /// mapping model properties to entity properties
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="taskModel"></param>
+        public void MappingModelToEntity(Task task, TaskModel taskModel)
+        {
+            task.Title = taskModel.Title;
+            task.EmpId = taskModel.EmpId;
+            task.StartDate = taskModel.StartDate;
+            task.EndDate = taskModel.EndDate;
+            task.Status = taskModel.Status;
+            task.Priority = taskModel.Priority;
+            task.ReportedBy = taskModel.ReportedBy;
+        }
+
+        /// <summary>
+        /// conversion of model to entity
+        /// </summary>
+        /// <param name="taskModel"></param>
+        /// <returns>Task entity</returns>
+        public static implicit operator Task(TaskModel taskModel)
+        {
+            return new Task
+            {
+                Title = taskModel.Title,
+                EmpId = taskModel.EmpId,
+                StartDate = taskModel.StartDate,
+                EndDate = taskModel.EndDate,
+                Priority = taskModel.Priority,
+                Status = taskModel.Status,
+                ReportedBy = taskModel.ReportedBy
+            };
+        }
     }
 }

@@ -1,20 +1,14 @@
 using EmployeeManagement.Entities;
-using EmployeeManagement.Models;
 using EmployeeManagement.Repository;
 using EmployeeManagement.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManagement
 {
@@ -43,13 +37,22 @@ namespace EmployeeManagement
 
             services.AddSwaggerGen();
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v5.6.0",
-            //                 new Info { Title = "EmployeeManagement", Version = "5.6.0" });
-            //});
-
-            services.AddSwaggerDocument();
+            // Register the Swagger Generator service. This service is responsible for genrating Swagger Documents.
+            // Note: Add this service at the end after AddMvc() or AddMvcCore().
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "EmployeeManagement API",
+                    Version = "v1",
+                    Description = "Simple CRUD API for Employee Management.",
+                    License = new OpenApiLicense
+                    {
+                        Name = "License Information",
+                        Url = new Uri("https://example.com/license"),
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,25 +69,24 @@ namespace EmployeeManagement
 
             app.UseAuthorization();
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeeManagement API V1");
+
+                // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+                //c.RoutePrefix = string.Empty;
+                c.RoutePrefix = "swagger/ui";
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "EmployeeManagement (V 5.6.0)");
-            //});
-
-            // This middleware serves the Swagger documentation UI
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeeManagement API V1");
-            //});
-
-            //app.UseSwagger();
-            //app.UseSwaggerUi3();
         }
     }
 }

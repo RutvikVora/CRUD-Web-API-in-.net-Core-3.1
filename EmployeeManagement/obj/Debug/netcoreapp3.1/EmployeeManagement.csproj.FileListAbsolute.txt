@@ -43,14 +43,3 @@ C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\net
 C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Namotion.Reflection.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NJsonSchema.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NJsonSchema.Yaml.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.Annotations.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.AspNetCore.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.Core.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.Core.Yaml.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.Generation.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\NSwag.Generation.AspNetCore.dll
-C:\Users\yellow\source\repos\EmployeeManagement\EmployeeManagement\bin\Debug\netcoreapp3.1\YamlDotNet.dll

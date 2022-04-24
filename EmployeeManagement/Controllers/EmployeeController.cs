@@ -57,7 +57,7 @@
                 Employee result = this.employeeRepository.UpsertEmployee(employeeModel);
                 if (result != null)
                 {
-                    EmployeeModel empModel = new EmployeeModel(this.employeeRepository.UpsertEmployee(employeeModel));
+                    EmployeeModel empModel = new EmployeeModel(result);
                     return Ok(empModel);
                 }
                 else

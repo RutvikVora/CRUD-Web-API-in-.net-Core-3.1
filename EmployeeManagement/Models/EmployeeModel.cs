@@ -19,7 +19,7 @@ namespace EmployeeManagement.Models
         /// <param name="emp"></param>
         public EmployeeModel(Employee emp)
         {
-            //this.Id = emp.Id;
+            this.Id = emp.Id;
             this.EmpName = emp.EmpName;
             this.Email = emp.Email;
             this.Gender = emp.Gender;
@@ -49,7 +49,6 @@ namespace EmployeeManagement.Models
         {
             return new Employee
             {
-                //Id = employeeModel.Id,
                 EmpName = employeeModel.EmpName,
                 Email = employeeModel.Email,
                 Gender = employeeModel.Gender,
@@ -61,7 +60,7 @@ namespace EmployeeManagement.Models
         /// <summary>
         /// Id of employee - PK
         /// </summary>
-        //public int Id { get; set; }
+        public int? Id { get; set; }
 
         /// <summary>
         /// name of employee

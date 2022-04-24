@@ -1,6 +1,5 @@
 ﻿namespace EmployeeManagement.Repository.Interfaces
 {
-    using System.Collections.Generic;
     using System.Linq;
     using EmployeeManagement.Entities;
     using EmployeeManagement.Models;
@@ -17,7 +16,7 @@
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns>task of particular id</returns>
-        Task GetTaskById(int taskId);
+        Task GetTaskById(int? taskId);
 
         /// <summary>
         ///  add edit task

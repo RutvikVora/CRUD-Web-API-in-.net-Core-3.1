@@ -17,7 +17,7 @@
         /// </summary>
         /// <param name="empId"></param>
         /// <returns>employee of particular Id</returns>
-        Employee GetEmployeeDetailsById(int empId);
+        Employee GetEmployeeDetailsById(int? empId);
 
         /// <summary>
         ///  add edit employee

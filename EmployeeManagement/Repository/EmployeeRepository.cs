@@ -30,7 +30,7 @@
         /// </summary>
         /// <param name="empId"></param>
         /// <returns>employee of particular Id</returns>
-        public Employee GetEmployeeDetailsById(int empId)
+        public Employee GetEmployeeDetailsById(int? empId)
         {
             return this.Find(x => x.Id == empId).FirstOrDefault();
         }
@@ -100,7 +100,7 @@
         /// </summary>
         /// <param name="email"></param>
         /// <returns>boolean value</returns>
-        public bool IsEmailExit(string email, int id = -1)
+        public bool IsEmailExit(string email, int? id = -1)
         {
             return this.Find(e => e.Email == email && e.Id != id).Any();
         }
