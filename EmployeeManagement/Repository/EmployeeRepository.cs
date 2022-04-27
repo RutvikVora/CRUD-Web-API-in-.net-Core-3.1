@@ -5,6 +5,9 @@
     using System.Linq;
     using EmployeeManagement.Repository.Interfaces;
     using EmployeeManagement.Entities;
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Mvc;
+    using EmployeeManagement.Controllers;
 
     public class EmployeeRepository: RepositoryBase<Employee>, IEmployeeRepository
     {

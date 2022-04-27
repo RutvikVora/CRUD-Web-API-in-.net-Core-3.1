@@ -3,11 +3,13 @@
     using EmployeeManagement.Entities;
     using EmployeeManagement.Models;
     using EmployeeManagement.Repository.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
 
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeController : ControllerBase

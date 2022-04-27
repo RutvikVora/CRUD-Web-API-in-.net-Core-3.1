@@ -25,7 +25,7 @@ namespace EmployeeManagement.Entities
             {
 #pragma warning disable CS1030 // #warning directive
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-J8T7UO1H; initial catalog=EmployeeManagement; Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-J8T7UO1H; initial catalog=EmployeeManagement;Trusted_Connection=True;");
 #pragma warning restore CS1030 // #warning directive
             }
         }
@@ -61,6 +61,11 @@ namespace EmployeeManagement.Entities
                 entity.Property(e => e.Gender)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Task>(entity =>

@@ -2,6 +2,7 @@
 {
     using EmployeeManagement.Entities;
     using EmployeeManagement.Models;
+    using System.Collections.Generic;
     using System.Linq;
 
     public interface IEmployeeRepository

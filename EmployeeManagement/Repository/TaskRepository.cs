@@ -22,9 +22,9 @@
         /// get list of all tasks
         /// </summary>
         /// <returns>list of all tasks</returns>
-        public IQueryable<Task> GetTasksList()
+        public IQueryable<Task> GetTasksList(string empId)
         {
-            return this.Find();
+            return this.Find(x => x.EmpId == Convert.ToInt32(empId));
         }
 
         /// <summary>

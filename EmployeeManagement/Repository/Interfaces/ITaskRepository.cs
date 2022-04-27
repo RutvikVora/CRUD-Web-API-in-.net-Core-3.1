@@ -9,7 +9,7 @@
         /// get list of all Tasks
         /// </summary>
         /// <returns>list of all tasks</returns>
-        IQueryable<Task> GetTasksList();
+        IQueryable<Task> GetTasksList(string empId);
 
         /// <summary>
         /// get Task details by task id
