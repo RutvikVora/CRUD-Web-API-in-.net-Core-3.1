@@ -28,7 +28,7 @@ namespace EmployeeManagement
         {
             services.AddControllers();
 
-            var connection = "server=LAPTOP-J8T7UO1H; database=EmployeeManagement; trusted_connection=true;";
+            string connection = this.Configuration.GetConnectionString(Constants.EmployeeManagementDB);
             services.AddDbContext<EmployeeManagementContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -78,8 +78,8 @@ namespace EmployeeManagement
                 });
             });
 
-            services.AddAuthentication("BasicAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, AuthenticationHandler>("BasicAuthentication", null);
+            services.AddAuthentication(Constants.AuthenticationScheme)
+                .AddScheme<AuthenticationSchemeOptions, AuthenticationHandler>(Constants.AuthenticationScheme, null);
 
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
